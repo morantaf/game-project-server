@@ -19,7 +19,8 @@ async function signUp(request, response, next) {
         username: request.body.username
       };
       const createUser = await User.create(user);
-      response.json(createUser);
+      const username = createUser.username;
+      response.json(username);
     }
   } catch (error) {
     next(error);
