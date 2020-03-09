@@ -1,11 +1,10 @@
 const { Router } = require("express");
 const bcrypt = require("bcrypt");
 const User = require("./model");
-const { toData } = require("../auth/jwt");
 
 const router = new Router();
 
-async function createUser(request, response, next) {
+async function signUp(request, response, next) {
   try {
     if (
       !request.body.email ||
@@ -27,28 +26,6 @@ async function createUser(request, response, next) {
   }
 }
 
-async function getUsers(request, response, next) {
-  try {
-    const fetchUser = await User.findAll();
-
-    response.json(fetchUser);
-  } catch (error) {
-    next(error);
-  }
-}
-
-async function getUniqueUser(request, response, next) {
-  try {
-    const fetchUniqueUser = await User.findByPk(request.params.id);
-
-    response.json(fetchUniqueUser);
-  } catch (error) {
-    next(error);
-  }
-}
-
-router.post("/user", createUser);
-router.get("/users", getUsers);
-router.get("/users/:id", getUniqueUser);
+router.post("/signup", signUp);
 
 module.exports = router;
