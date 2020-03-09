@@ -18,8 +18,9 @@ router.post("/login", (request, response, next) => {
           response
             .status(400)
             .send({ message: "User with that email doesn't exist" });
-        } else if (bcrypt.compareSync(request.body.password, user.password)) {
+        } else if (bcrypt.compareSync(password, user.password)) {
           response.send({
+            username: user.username,
             jwt: toJWT({ userId: user.id })
           });
         } else {
