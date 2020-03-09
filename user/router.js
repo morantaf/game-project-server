@@ -7,12 +7,17 @@ const router = new Router();
 
 async function createUser(request, response, next) {
   try {
-    if (!request.body.email || !request.body.password) {
+    if (
+      !request.body.email ||
+      !request.body.password ||
+      !request.body.username
+    ) {
       response.status(400).send("Please enter a valid e-mail and password");
     } else {
       const user = {
         email: request.body.email,
-        password: bcrypt.hashSync(request.body.password, 10)
+        password: bcrypt.hashSync(request.body.password, 10),
+        username: request.body.username
       };
       const createUser = await User.create(user);
       response.json(createUser);
